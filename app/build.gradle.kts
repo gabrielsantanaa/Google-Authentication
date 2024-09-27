@@ -1,7 +1,10 @@
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -41,7 +44,7 @@ android {
         compose = true
     }
     composeCompiler {
-        enableStrongSkippingMode = true
+        featureFlags.add(ComposeFeatureFlag.StrongSkipping)
     }
     packaging {
         resources {
@@ -67,4 +70,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+
 }

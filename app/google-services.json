@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "667376057228",
+    "project_id": "let-s-vote-a7d41",
+    "storage_bucket": "let-s-vote-a7d41.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667376057228:android:e92f1ffbde1f99044ab4a9",
+        "android_client_info": {
+          "package_name": "com.gabrielsantana.letsvote"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLfzbLANPYXAWcP3Cw3y4gaqwyzfgfhyI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
