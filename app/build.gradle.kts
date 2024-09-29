@@ -5,6 +5,14 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.hilt)
+    id("com.google.devtools.ksp")
+}
+
+kotlin {
+    sourceSets.all {
+        languageSettings.enableLanguageFeature("ExplicitBackingFields")
+    }
 }
 
 android {
@@ -86,5 +94,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     implementation(libs.firebase.ui.auth)
+
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
 
 }

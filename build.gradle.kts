@@ -4,4 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.hilt) apply false
+    id("org.jetbrains.kotlin.jvm") version "2.0.20"
+    id("com.google.devtools.ksp") version "2.0.20-1.0.24"
+
 }
