@@ -74,5 +74,17 @@ dependencies {
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
+
+    // Google Services
+    implementation(libs.play.services.auth)
+
+    implementation("androidx.credentials:credentials:1.2.2")
+    implementation("androidx.credentials:credentials-play-services-auth:1.2.2")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    implementation(libs.firebase.ui.auth)
 
 }

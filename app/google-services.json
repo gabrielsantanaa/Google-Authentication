@@ -12,7 +12,20 @@
           "package_name": "com.gabrielsantana.letsvote"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "667376057228-thtq9049nrr5bkfdbis1nflaftrbh2go.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gabrielsantana.letsvote",
+            "certificate_hash": "82e163924dec3b01952ec62732566e46945aa109"
+          }
+        },
+        {
+          "client_id": "667376057228-1o8dr26lfr9mrsibv3cgf4udkc98hljk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDLfzbLANPYXAWcP3Cw3y4gaqwyzfgfhyI"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "667376057228-1o8dr26lfr9mrsibv3cgf4udkc98hljk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
