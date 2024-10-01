@@ -7,22 +7,22 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:667376057228:android:e92f1ffbde1f99044ab4a9",
+        "mobilesdk_app_id": "1:667376057228:android:d3af9040d29a49ef4ab4a9",
         "android_client_info": {
           "package_name": "com.gabrielsantana.letsvote"
         }
       },
       "oauth_client": [
         {
-          "client_id": "667376057228-thtq9049nrr5bkfdbis1nflaftrbh2go.apps.googleusercontent.com",
+          "client_id": "667376057228-2ukrngemjnj5acl6ggt20q9tv2hk1li4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.gabrielsantana.letsvote",
-            "certificate_hash": "82e163924dec3b01952ec62732566e46945aa109"
+            "certificate_hash": "bff9fd797dd3e06e0fa8b317f933a6c5950081e6"
           }
         },
         {
-          "client_id": "667376057228-1o8dr26lfr9mrsibv3cgf4udkc98hljk.apps.googleusercontent.com",
+          "client_id": "667376057228-tdg14o10jll6n15n2u00oionr9i6nra4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "667376057228-1o8dr26lfr9mrsibv3cgf4udkc98hljk.apps.googleusercontent.com",
+              "client_id": "667376057228-0c9s3r9d0471apafbiq78s2k4rbhuceh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

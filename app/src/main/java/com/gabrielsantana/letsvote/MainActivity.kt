@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.gabrielsantana.letsvote.screens.App
 import com.gabrielsantana.letsvote.screens.login.LoginScreen
 import com.gabrielsantana.letsvote.ui.theme.LetsVoteTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,25 +22,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            LetsVoteTheme {
-                LoginScreen()
-            }
+            App()
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    LetsVoteTheme {
-        Greeting("Android")
     }
 }

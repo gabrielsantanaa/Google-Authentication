@@ -7,5 +7,6 @@ plugins {
     alias(libs.plugins.hilt) apply false
     id("org.jetbrains.kotlin.jvm") version "2.0.20"
     id("com.google.devtools.ksp") version "2.0.20-1.0.24"
+    kotlin("plugin.serialization") version "2.0.20"
 
 }
