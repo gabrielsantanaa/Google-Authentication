@@ -105,6 +105,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.kotlin.reflect)
 
+    implementation(libs.androidx.datastore.preferences)
 
 }

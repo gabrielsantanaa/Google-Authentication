@@ -32,6 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.exceptions.GetCredentialCancellationException
+import androidx.credentials.exceptions.GetCredentialException
+import androidx.credentials.exceptions.NoCredentialException
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gabrielsantana.letsvote.ui.icons.filled.Google
@@ -64,11 +66,27 @@ fun LoginContent(
         if (uiState.signRequest != null) {
             try {
                 val result =
-                    CredentialManager.create(context).getCredential(context, uiState.signRequest!!)
+                    CredentialManager.create(context).getCredential(context, uiState.signRequest)
                 onLoginResult(result)
             } catch (e: GetCredentialCancellationException) {
                 val result = snackbarHostState.showSnackbar(
                     message = "Google Sign-in cancelled",
+                    actionLabel = "Retry",
+                    duration = SnackbarDuration.Short
+                )
+                if (result == SnackbarResult.ActionPerformed) {
+                    onLogin()
+                }
+            } catch (_: NoCredentialException) {
+                val result = snackbarHostState.showSnackbar(
+                    message = "There's no Google Account on this device",
+                    duration = SnackbarDuration.Short
+                )
+            }
+            //catch this exception on end
+            catch (_: GetCredentialException) {
+                val result = snackbarHostState.showSnackbar(
+                    message = "An error occurred",
                     actionLabel = "Retry",
                     duration = SnackbarDuration.Short
                 )

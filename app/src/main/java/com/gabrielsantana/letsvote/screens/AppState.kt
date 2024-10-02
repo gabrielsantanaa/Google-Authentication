@@ -1,10 +1,14 @@
 package com.gabrielsantana.letsvote.screens
 
 import android.content.res.Resources.Theme
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -21,9 +25,11 @@ private const val TAG = "AppState"
 class AppState(
     coroutineScope: CoroutineScope
 ) {
-
-    private val _themeMode = MutableStateFlow<ThemeMode>(ThemeMode.System(false))
+    private val _themeMode = MutableStateFlow<ThemeMode>(ThemeMode.System)
     val themeMode = _themeMode.asStateFlow()
+
+    private val _isDynamicColorsEnabled = MutableStateFlow(false)
+    val isDynamicColorsEnabled = _isDynamicColorsEnabled.asStateFlow()
 
     val isLoggedIn = callbackFlow {
         val authStateListener = FirebaseAuth.AuthStateListener { auth ->
@@ -35,15 +41,28 @@ class AppState(
         }
     }.stateIn(coroutineScope, SharingStarted.WhileSubscribed(), Firebase.auth.currentUser != null)
 
+
+    fun setThemeMode(themeMode: ThemeMode) {
+        _themeMode.value = themeMode
+    }
+
+    fun setDynamicColorsMode(enabled: Boolean) {
+        _isDynamicColorsEnabled.value = enabled
+    }
+
 }
 
+val AppState.isDarkMode: Boolean
+    @Composable
+    get() {
+        val themeMode by themeMode.collectAsStateWithLifecycle()
+        return if (themeMode is ThemeMode.System) isSystemInDarkTheme() else themeMode is ThemeMode.Dark
+    }
+
 sealed class ThemeMode {
-
-    abstract val useDynamicColor: Boolean
-
-    data class System(override val useDynamicColor: Boolean) : ThemeMode()
-    data class Light(override val useDynamicColor: Boolean) : ThemeMode()
-    data class Dark(override val useDynamicColor: Boolean) : ThemeMode()
+    data object System : ThemeMode()
+    data object Light : ThemeMode()
+    data object Dark : ThemeMode()
 }
 
 @Composable
