@@ -33,19 +33,9 @@ fun App(
     appState: AppState = rememberAppState()
 ) {
     val navController = rememberNavController()
-
-    val isLoggedIn by appState.isLoggedIn.collectAsStateWithLifecycle()
     val themeMode by appState.themeMode.collectAsStateWithLifecycle()
-
     val isDynamicColorsEnabled by appState.isDynamicColorsEnabled.collectAsStateWithLifecycle()
-
-    LaunchedEffect(isLoggedIn) {
-        if (isLoggedIn) {
-            navController.navigate(HomeScreen)
-        } else {
-            navController.navigate(LoginScreen)
-        }
-    }
+    val isSignedIn by appState.isLoggedIn.collectAsStateWithLifecycle()
 
     LetsVoteTheme(
         darkTheme = appState.isDarkMode,
@@ -53,10 +43,16 @@ fun App(
     ) {
         NavHost(
             navController = navController,
-            startDestination = LoginScreen
+            startDestination = if (isSignedIn) HomeScreen else LoginScreen,
         ) {
             composable<LoginScreen> {
-                LoginScreen()
+                LoginScreen(
+                    onNavigateToHome = {
+                        navController.navigate(HomeScreen) {
+                            launchSingleTop = true
+                        }
+                    }
+                )
             }
             composable<HomeScreen> {
                 HomeScreen(

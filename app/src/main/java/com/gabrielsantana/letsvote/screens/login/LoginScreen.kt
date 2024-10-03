@@ -40,9 +40,16 @@ import com.gabrielsantana.letsvote.ui.icons.filled.Google
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel = hiltViewModel()
+    onNavigateToHome: () -> Unit,
+    viewModel: LoginViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(uiState.isUserSignedIn) {
+        if (uiState.isUserSignedIn) {
+            onNavigateToHome()
+        }
+    }
 
     LoginContent(
         uiState = uiState,
@@ -78,7 +85,7 @@ fun LoginContent(
                     onLogin()
                 }
             } catch (_: NoCredentialException) {
-                val result = snackbarHostState.showSnackbar(
+                snackbarHostState.showSnackbar(
                     message = "There's no Google Account on this device",
                     duration = SnackbarDuration.Short
                 )

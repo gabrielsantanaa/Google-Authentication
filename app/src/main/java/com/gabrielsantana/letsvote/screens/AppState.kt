@@ -3,6 +3,7 @@ package com.gabrielsantana.letsvote.screens
 import android.content.res.Resources.Theme
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.stateIn
 
 private const val TAG = "AppState"
 
+@Stable
 class AppState(
     coroutineScope: CoroutineScope
 ) {

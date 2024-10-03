@@ -16,6 +16,7 @@ import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -26,8 +27,8 @@ class LoginViewModel @Inject constructor(
     @ApplicationContext private val appContext: Context
 ) : ViewModel() {
 
-    val uiState = MutableStateFlow(LoginUiState())
-
+    private val _uiState = MutableStateFlow(LoginUiState(isUserSignedIn = Firebase.auth.currentUser != null))
+    val uiState = _uiState.asStateFlow()
 
     fun signWithGoogle() {
         viewModelScope.launch {
@@ -46,9 +47,9 @@ class LoginViewModel @Inject constructor(
                 val request: GetCredentialRequest = GetCredentialRequest.Builder()
                     .addCredentialOption(googleIdOption)
                     .build()
-                uiState.update { it.copy(signRequest = request) }
+                _uiState.update { it.copy(signRequest = request) }
             } catch (e: Exception) {
-                uiState.update { it.copy(isError = true) }
+                _uiState.update { it.copy(isError = true) }
             }
         }
     }
@@ -65,9 +66,9 @@ class LoginViewModel @Inject constructor(
                 val authCredential =
                     GoogleAuthProvider.getCredential(googleIdTokenCredential.idToken, null)
                Firebase.auth.signInWithCredential(authCredential).await()
-                uiState.update { it.copy(isUserSignedIn = true) }
+                _uiState.update { it.copy(isUserSignedIn = true, signRequest = null) }
             } else {
-                uiState.update { it.copy(isError = true) }
+                _uiState.update { it.copy(isError = true) }
             }
         }
     }
