@@ -39,6 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun HomeScreen(
+    onNavigateToCreate: () -> Unit,
     onNavigateToSettings: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
@@ -48,6 +49,7 @@ fun HomeScreen(
 
     HomeContent(
         uiState = uiState,
+        onCreate = onNavigateToCreate,
         onLogout = viewModel::logout,
         onSettings = onNavigateToSettings,
         onRoomCodeChange = viewModel::updateRoomCode,
@@ -61,6 +63,7 @@ fun HomeContent(
     onRoomCodeChange: (String) -> Unit,
     onLogout: () -> Unit,
     onSettings: () -> Unit,
+    onCreate: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     //TODO check if whether is good keep this here or to hoist it to the viewmodel
@@ -125,7 +128,7 @@ fun HomeContent(
                 modifier = Modifier.fillMaxWidth()
             ) { Text("Join room") }
             OutlinedButton(
-                onClick = {},
+                onClick = onCreate,
                 modifier = Modifier.fillMaxWidth()
             ) { Text("Create room") }
         }
@@ -165,7 +168,8 @@ private fun HomeScreenPreview() {
             uiState = HomeUiState("123456"),
             onRoomCodeChange = {},
             onLogout = {},
-            onSettings = {}
+            onSettings = {},
+            {}
         )
     }
 }

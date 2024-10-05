@@ -1,5 +1,6 @@
 package com.gabrielsantana.letsvote.screens
 
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +14,8 @@ import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import com.gabrielsantana.letsvote.screens.home.HomeScreen
 import com.gabrielsantana.letsvote.screens.login.LoginScreen
+import com.gabrielsantana.letsvote.screens.poll.NewPollScreen
+import com.gabrielsantana.letsvote.screens.question.NewQuestionDialogScreen
 import com.gabrielsantana.letsvote.screens.settings.SettingsScreen
 import com.gabrielsantana.letsvote.ui.theme.LetsVoteTheme
 import kotlinx.serialization.Serializable
@@ -26,6 +29,12 @@ object HomeScreen
 
 @Serializable
 object SettingsDialogScreen
+
+@Serializable
+object NewPollScreen
+
+@Serializable
+object NewQuestionDialogScreen
 
 @Composable
 fun App(
@@ -58,6 +67,9 @@ fun App(
                 HomeScreen(
                     onNavigateToSettings = {
                         navController.navigate(SettingsDialogScreen)
+                    },
+                    onNavigateToCreate = {
+                        navController.navigate(NewPollScreen)
                     }
                 )
             }
@@ -70,6 +82,23 @@ fun App(
                     isDynamicColorsEnabled = isDynamicColorsEnabled,
                     onToggleDynamicColors = appState::setDynamicColorsMode,
                     onDismissRequest = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+            composable<NewPollScreen> {
+                NewPollScreen(
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    },
+                    onAddQuestion = {
+                        navController.navigate(NewQuestionDialogScreen)
+                    }
+                )
+            }
+            dialog<NewQuestionDialogScreen> {
+                NewQuestionDialogScreen(
+                    onNavigateBack = {
                         navController.popBackStack()
                     }
                 )
