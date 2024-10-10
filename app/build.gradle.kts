@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.google.services)
     alias(libs.plugins.hilt)
+    id("kotlin-parcelize")
     id("com.google.devtools.ksp")
     kotlin("plugin.serialization") version "2.0.20"
 }

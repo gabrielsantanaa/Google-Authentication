@@ -1,12 +1,9 @@
 package com.gabrielsantana.letsvote.screens
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,7 +11,8 @@ import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import com.gabrielsantana.letsvote.screens.home.HomeScreen
 import com.gabrielsantana.letsvote.screens.login.LoginScreen
-import com.gabrielsantana.letsvote.screens.poll.NewPollScreen
+import com.gabrielsantana.letsvote.features.poll.ui.NewPollScreen
+import com.gabrielsantana.letsvote.features.poll.ui.NewPollViewModel
 import com.gabrielsantana.letsvote.screens.question.NewQuestionDialogScreen
 import com.gabrielsantana.letsvote.screens.settings.SettingsScreen
 import com.gabrielsantana.letsvote.ui.theme.LetsVoteTheme
@@ -50,6 +48,7 @@ fun App(
         darkTheme = appState.isDarkMode,
         dynamicColor = isDynamicColorsEnabled
     ) {
+        val newPollViewModel = hiltViewModel<NewPollViewModel>()
         NavHost(
             navController = navController,
             startDestination = if (isSignedIn) HomeScreen else LoginScreen,
@@ -88,6 +87,7 @@ fun App(
             }
             composable<NewPollScreen> {
                 NewPollScreen(
+                    viewModel = newPollViewModel,
                     onNavigateBack = {
                         navController.popBackStack()
                     },
@@ -99,6 +99,10 @@ fun App(
             dialog<NewQuestionDialogScreen> {
                 NewQuestionDialogScreen(
                     onNavigateBack = {
+                        navController.popBackStack()
+                    },
+                    onSave = { uiModel ->
+                        newPollViewModel.addQuestion(uiModel)
                         navController.popBackStack()
                     }
                 )

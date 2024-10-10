@@ -1,9 +1,11 @@
-package com.gabrielsantana.letsvote.screens.poll
+package com.gabrielsantana.letsvote.features.poll.ui
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
+@HiltViewModel
 class NewPollViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(NewPollUiState.INITIAL)
@@ -14,7 +16,15 @@ class NewPollViewModel : ViewModel() {
     }
 
     fun addQuestion(question: QuestionUiModel) {
-        _uiState.update { it. copy(questions = _uiState.value.questions + question) }
+        _uiState.update { it.copy(questions = _uiState.value.questions + question) }
+    }
+
+    fun onSave() {
+
+    }
+
+    fun removeQuestion(question: QuestionUiModel) {
+        _uiState.update { it.copy(questions = _uiState.value.questions - question) }
     }
 
 }

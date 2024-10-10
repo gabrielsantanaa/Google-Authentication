@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
-package com.gabrielsantana.letsvote.screens.poll
+package com.gabrielsantana.letsvote.features.poll.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,7 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.Button
@@ -46,21 +45,27 @@ fun NewPollScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     NewPollContent(
-        question = uiState.questions,
+        uiState = uiState,
         onBack = onNavigateBack,
-        onSave = { },
-        onSettings = { },
-        onAddQuestion = onAddQuestion
+        onSave = viewModel::onSave,
+        onSettings = {
+            // TODO: Open settings
+        },
+        onAddQuestion = onAddQuestion,
+        onRemoveQuestion = viewModel::removeQuestion,
+        onChangeTitle = viewModel::updateTitle
     )
 }
 
 @Composable
 fun NewPollContent(
-    question: List<QuestionUiModel>,
+    uiState: NewPollUiState,
     onBack: () -> Unit,
     onSave: () -> Unit,
     onSettings: () -> Unit,
     onAddQuestion: () -> Unit,
+    onRemoveQuestion: (model: QuestionUiModel) -> Unit,
+    onChangeTitle: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -98,8 +103,8 @@ fun NewPollContent(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = uiState.title,
+                onValueChange = onChangeTitle,
                 label = { Text("Title") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -107,10 +112,10 @@ fun NewPollContent(
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                question.forEachIndexed { index, question ->
+                uiState.questions.forEachIndexed { index, question ->
                     QuestionItem(
                         question = question,
-                        onDelete = {}
+                        onDelete = { onRemoveQuestion(question) }
                     )
                 }
             }
@@ -160,11 +165,13 @@ fun QuestionItem(
 private fun NewPollContentPreview() {
     MaterialTheme {
         NewPollContent(
-            questions,
+            NewPollUiState.INITIAL,
             onBack = {},
             onSave = {},
             onSettings = {},
-            onAddQuestion = {}
+            onAddQuestion = {},
+            onRemoveQuestion = {},
+            onChangeTitle = {}
         )
     }
 }
