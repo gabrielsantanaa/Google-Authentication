@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
-package com.gabrielsantana.letsvote.features.poll.ui
+package com.gabrielsantana.letsvote.features.poll.create.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -47,7 +47,7 @@ fun NewPollScreen(
     NewPollContent(
         uiState = uiState,
         onBack = onNavigateBack,
-        onSave = viewModel::onSave,
+        onSave = viewModel::createPoll,
         onSettings = {
             // TODO: Open settings
         },

@@ -1,7 +1,6 @@
-package com.gabrielsantana.letsvote.features.poll.ui
+package com.gabrielsantana.letsvote.features.poll.create.ui
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import com.gabrielsantana.letsvote.features.poll.create.ui.model.QuestionUiModel
 
 data class NewPollUiState(
     val title: String = "",
@@ -14,9 +13,3 @@ data class NewPollUiState(
     }
 }
 
-@Parcelize
-data class QuestionUiModel(
-    val title: String,
-    val options: List<String>,
-    val correctOptionIndex: Int
-) : Parcelable

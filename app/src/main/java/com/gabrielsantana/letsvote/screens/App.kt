@@ -11,8 +11,8 @@ import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import com.gabrielsantana.letsvote.screens.home.HomeScreen
 import com.gabrielsantana.letsvote.screens.login.LoginScreen
-import com.gabrielsantana.letsvote.features.poll.ui.NewPollScreen
-import com.gabrielsantana.letsvote.features.poll.ui.NewPollViewModel
+import com.gabrielsantana.letsvote.features.poll.create.ui.NewPollScreen
+import com.gabrielsantana.letsvote.features.poll.create.ui.NewPollViewModel
 import com.gabrielsantana.letsvote.screens.question.NewQuestionDialogScreen
 import com.gabrielsantana.letsvote.screens.settings.SettingsScreen
 import com.gabrielsantana.letsvote.ui.theme.LetsVoteTheme
