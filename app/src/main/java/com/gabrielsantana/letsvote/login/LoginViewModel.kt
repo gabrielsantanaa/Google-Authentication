@@ -1,4 +1,4 @@
-package com.gabrielsantana.letsvote.screens.login
+package com.gabrielsantana.letsvote.login
 
 import android.content.Context
 import androidx.credentials.CustomCredential

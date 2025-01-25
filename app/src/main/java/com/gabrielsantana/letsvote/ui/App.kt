@@ -1,4 +1,4 @@
-package com.gabrielsantana.letsvote.screens
+package com.gabrielsantana.letsvote.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -9,12 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
-import com.gabrielsantana.letsvote.screens.home.HomeScreen
-import com.gabrielsantana.letsvote.screens.login.LoginScreen
-import com.gabrielsantana.letsvote.features.poll.create.ui.NewPollScreen
-import com.gabrielsantana.letsvote.features.poll.create.ui.NewPollViewModel
-import com.gabrielsantana.letsvote.screens.question.NewQuestionDialogScreen
-import com.gabrielsantana.letsvote.screens.settings.SettingsScreen
+import com.gabrielsantana.letsvote.login.LoginScreen
+import com.gabrielsantana.letsvote.settings.SettingsScreen
 import com.gabrielsantana.letsvote.ui.theme.LetsVoteTheme
 import kotlinx.serialization.Serializable
 
@@ -48,7 +44,6 @@ fun App(
         darkTheme = appState.isDarkMode,
         dynamicColor = isDynamicColorsEnabled
     ) {
-        val newPollViewModel = hiltViewModel<NewPollViewModel>()
         NavHost(
             navController = navController,
             startDestination = if (isSignedIn) HomeScreen else LoginScreen,
@@ -56,19 +51,7 @@ fun App(
             composable<LoginScreen> {
                 LoginScreen(
                     onNavigateToHome = {
-                        navController.navigate(HomeScreen) {
-                            launchSingleTop = true
-                        }
-                    }
-                )
-            }
-            composable<HomeScreen> {
-                HomeScreen(
-                    onNavigateToSettings = {
-                        navController.navigate(SettingsDialogScreen)
-                    },
-                    onNavigateToCreate = {
-                        navController.navigate(NewPollScreen)
+
                     }
                 )
             }
@@ -85,28 +68,7 @@ fun App(
                     }
                 )
             }
-            composable<NewPollScreen> {
-                NewPollScreen(
-                    viewModel = newPollViewModel,
-                    onNavigateBack = {
-                        navController.popBackStack()
-                    },
-                    onAddQuestion = {
-                        navController.navigate(NewQuestionDialogScreen)
-                    }
-                )
-            }
-            dialog<NewQuestionDialogScreen> {
-                NewQuestionDialogScreen(
-                    onNavigateBack = {
-                        navController.popBackStack()
-                    },
-                    onSave = { uiModel ->
-                        newPollViewModel.addQuestion(uiModel)
-                        navController.popBackStack()
-                    }
-                )
-            }
+
         }
 
     }

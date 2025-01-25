@@ -1,4 +1,4 @@
-package com.gabrielsantana.letsvote.screens.login
+package com.gabrielsantana.letsvote.login
 
 import androidx.credentials.GetCredentialRequest
 

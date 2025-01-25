@@ -9,9 +9,9 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.gabrielsantana.letsvote.screens.App
-import com.gabrielsantana.letsvote.screens.ThemeMode
-import com.gabrielsantana.letsvote.screens.rememberAppState
+import com.gabrielsantana.letsvote.ui.App
+import com.gabrielsantana.letsvote.ui.ThemeMode
+import com.gabrielsantana.letsvote.ui.rememberAppState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

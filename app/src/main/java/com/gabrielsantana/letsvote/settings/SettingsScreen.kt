@@ -1,4 +1,4 @@
-package com.gabrielsantana.letsvote.screens.settings
+package com.gabrielsantana.letsvote.settings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,7 +30,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.gabrielsantana.letsvote.screens.ThemeMode
+import com.gabrielsantana.letsvote.ui.ThemeMode
 
 @Composable
 fun SettingsScreen(
