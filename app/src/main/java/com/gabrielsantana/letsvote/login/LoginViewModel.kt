@@ -24,10 +24,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
+    //just to get web client id, never use it for a changeable resource like test
     @ApplicationContext private val appContext: Context
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(LoginUiState(isUserSignedIn = Firebase.auth.currentUser != null))
+    private val _uiState =
+        MutableStateFlow(LoginUiState(isUserSignedIn = Firebase.auth.currentUser != null))
     val uiState = _uiState.asStateFlow()
 
     fun signWithGoogle() {
@@ -65,7 +67,7 @@ class LoginViewModel @Inject constructor(
                     GoogleIdTokenCredential.createFrom(credential.data)
                 val authCredential =
                     GoogleAuthProvider.getCredential(googleIdTokenCredential.idToken, null)
-               Firebase.auth.signInWithCredential(authCredential).await()
+                Firebase.auth.signInWithCredential(authCredential).await()
                 _uiState.update { it.copy(isUserSignedIn = true, signRequest = null) }
             } else {
                 _uiState.update { it.copy(isError = true) }

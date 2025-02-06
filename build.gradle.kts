@@ -5,8 +5,7 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.hilt) apply false
-    id("org.jetbrains.kotlin.jvm") version "2.0.20"
-    id("com.google.devtools.ksp") version "2.0.20-1.0.24"
-    kotlin("plugin.serialization") version "2.0.20"
-
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
 }

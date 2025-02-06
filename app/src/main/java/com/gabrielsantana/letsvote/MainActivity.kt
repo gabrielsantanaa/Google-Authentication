@@ -5,12 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gabrielsantana.letsvote.ui.App
-import com.gabrielsantana.letsvote.ui.ThemeMode
+import com.gabrielsantana.letsvote.ui.isDarkMode
 import com.gabrielsantana.letsvote.ui.rememberAppState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,22 +18,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val appState = rememberAppState()
-
-            val themeMode by appState.themeMode.collectAsStateWithLifecycle()
-
-            val darkTheme =
-                if (themeMode is ThemeMode.System) isSystemInDarkTheme() else themeMode is ThemeMode.Dark
-
-            LaunchedEffect(darkTheme) {
+            val isDarkMode = appState.isDarkMode
+            LaunchedEffect(isDarkMode) {
                 enableEdgeToEdge(
                     statusBarStyle = SystemBarStyle.auto(
                         android.graphics.Color.TRANSPARENT,
                         android.graphics.Color.TRANSPARENT,
-                    ) { darkTheme },
+                    ) { isDarkMode },
                     navigationBarStyle = SystemBarStyle.auto(
                         lightScrim,
                         darkScrim,
-                    ) { darkTheme },
+                    ) { isDarkMode },
                 )
             }
             App(appState = appState)

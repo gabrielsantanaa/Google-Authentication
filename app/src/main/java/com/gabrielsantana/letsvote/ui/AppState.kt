@@ -4,17 +4,16 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.runtime.setValue
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.stateIn
 
@@ -24,11 +23,9 @@ private const val TAG = "AppState"
 class AppState(
     coroutineScope: CoroutineScope
 ) {
-    private val _themeMode = MutableStateFlow<ThemeMode>(ThemeMode.System)
-    val themeMode = _themeMode.asStateFlow()
+    var themeMode by mutableStateOf<ThemeMode>(ThemeMode.System)
 
-    private val _isDynamicColorsEnabled = MutableStateFlow(false)
-    val isDynamicColorsEnabled = _isDynamicColorsEnabled.asStateFlow()
+    var isDynamicColorsEnabled by mutableStateOf(false)
 
     val isLoggedIn = callbackFlow {
         val authStateListener = FirebaseAuth.AuthStateListener { auth ->
@@ -40,21 +37,11 @@ class AppState(
         }
     }.stateIn(coroutineScope, SharingStarted.WhileSubscribed(), Firebase.auth.currentUser != null)
 
-
-    fun setThemeMode(themeMode: ThemeMode) {
-        _themeMode.value = themeMode
-    }
-
-    fun setDynamicColorsMode(enabled: Boolean) {
-        _isDynamicColorsEnabled.value = enabled
-    }
-
 }
 
 val AppState.isDarkMode: Boolean
     @Composable
     get() {
-        val themeMode by themeMode.collectAsStateWithLifecycle()
         return if (themeMode is ThemeMode.System) isSystemInDarkTheme() else themeMode is ThemeMode.Dark
     }
 

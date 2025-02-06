@@ -2,6 +2,7 @@
 
 package com.gabrielsantana.letsvote.login
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -37,6 +38,8 @@ import androidx.credentials.exceptions.NoCredentialException
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gabrielsantana.letsvote.ui.icons.filled.Google
+
+private const val TAG = "LoginScreen.kt"
 
 @Composable
 fun LoginScreen(
@@ -84,14 +87,16 @@ fun LoginContent(
                 if (result == SnackbarResult.ActionPerformed) {
                     onLogin()
                 }
-            } catch (_: NoCredentialException) {
+                Log.e(TAG, "Login Error", e)
+            } catch (e: NoCredentialException) {
                 snackbarHostState.showSnackbar(
                     message = "There's no Google Account on this device",
                     duration = SnackbarDuration.Short
                 )
+                Log.e(TAG, "Login Error", e)
             }
             //catch this exception on end
-            catch (_: GetCredentialException) {
+            catch (e: GetCredentialException) {
                 val result = snackbarHostState.showSnackbar(
                     message = "An error occurred",
                     actionLabel = "Retry",
@@ -100,6 +105,7 @@ fun LoginContent(
                 if (result == SnackbarResult.ActionPerformed) {
                     onLogin()
                 }
+                Log.e(TAG, "Login Error", e)
             }
         }
     }
@@ -137,6 +143,20 @@ fun LoginContent(
         }
     }
 }
+
+@Preview
+@Composable
+fun NewPreview(modifier: Modifier = Modifier) {
+    MaterialTheme {
+        LoginContent(
+            onLogin = { },
+            modifier = modifier,
+            uiState = LoginUiState(isError = true),
+            onLoginResult = {}
+        )
+    }
+}
+
 
 @Preview
 @Composable

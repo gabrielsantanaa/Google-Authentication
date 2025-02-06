@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
+import com.gabrielsantana.letsvote.home.HomeScreen
 import com.gabrielsantana.letsvote.login.LoginScreen
 import com.gabrielsantana.letsvote.settings.SettingsScreen
 import com.gabrielsantana.letsvote.ui.theme.LetsVoteTheme
@@ -24,45 +25,41 @@ object HomeScreen
 @Serializable
 object SettingsDialogScreen
 
-@Serializable
-object NewPollScreen
-
-@Serializable
-object NewQuestionDialogScreen
-
 @Composable
 fun App(
     modifier: Modifier = Modifier,
     appState: AppState = rememberAppState()
 ) {
     val navController = rememberNavController()
-    val themeMode by appState.themeMode.collectAsStateWithLifecycle()
-    val isDynamicColorsEnabled by appState.isDynamicColorsEnabled.collectAsStateWithLifecycle()
     val isSignedIn by appState.isLoggedIn.collectAsStateWithLifecycle()
 
     LetsVoteTheme(
         darkTheme = appState.isDarkMode,
-        dynamicColor = isDynamicColorsEnabled
+        dynamicColor = appState.isDynamicColorsEnabled
     ) {
         NavHost(
             navController = navController,
             startDestination = if (isSignedIn) HomeScreen else LoginScreen,
+            modifier = modifier
         ) {
             composable<LoginScreen> {
                 LoginScreen(
                     onNavigateToHome = {
-
+                        //don't need to navigate manually
                     }
                 )
             }
+            composable<HomeScreen> {
+                HomeScreen()
+            }
             dialog<SettingsDialogScreen> {
                 SettingsScreen(
-                    themeMode = themeMode,
+                    themeMode = appState.themeMode,
                     onChangeThemeMode = {
-                        appState.setThemeMode(it)
+                        appState.themeMode = it
                     },
-                    isDynamicColorsEnabled = isDynamicColorsEnabled,
-                    onToggleDynamicColors = appState::setDynamicColorsMode,
+                    isDynamicColorsEnabled = appState.isDynamicColorsEnabled,
+                    onToggleDynamicColors = { appState.isDynamicColorsEnabled = it },
                     onDismissRequest = {
                         navController.popBackStack()
                     }

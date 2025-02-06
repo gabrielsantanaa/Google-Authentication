@@ -157,9 +157,9 @@ fun SelectableItem(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-private fun SettingsItemPreview(modifier: Modifier = Modifier) {
+private fun SettingsItemPreview() {
     var isChecked by remember { mutableStateOf(false) }
     MaterialTheme {
         SelectableItem(
